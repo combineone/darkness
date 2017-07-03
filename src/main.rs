@@ -3,23 +3,37 @@ extern crate gl;
 extern crate glutin;
 
 fn main() {
-    let window = glutin::Window::new().unwrap();
+    let events_loop = glutin::EventsLoop::new();
+    let window = glutin::WindowBuilder::new()
+        .with_title("Darking Engine".to_string())
+        .with_dimensions(1024, 768)
+        .with_vsync()
+        .build(&events_loop)
+        .unwrap();
+
+    unsafe { window.make_current() }.unwrap();
 
     unsafe {
-        let _ = window.make_current();
-
         gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
 
         gl::ClearColor(0.6, 0.6, 0.6, 1.0);
     }
 
-    for event in window.wait_events() {
-        unsafe { gl::Clear(gl::COLOR_BUFFER_BIT) };
-        let _ = window.swap_buffers();
+    let mut running = true;
+    while running {
+        events_loop.poll_events(|event| {
+            match event {
+                glutin::Event::WindowEvent{ event: glutin::WindowEvent::Closed, .. } => {
+                    running = false;
+                },
+                _ => ()
+            }
+        });
 
-        match event {
-            glutin::Event::Closed => break,
-            _ => ()
+        unsafe {
+            gl::Clear(gl::COLOR_BUFFER_BIT);
         }
+
+        window.swap_buffers().unwrap();
     }
 }
