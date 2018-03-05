@@ -5,7 +5,7 @@ extern crate glutin;
 fn main() {
     let events_loop = glutin::EventsLoop::new();
     let window = glutin::WindowBuilder::new()
-        .with_title("Darking Engine".to_string())
+        .with_title(r#"Darking Engine"#)
         .with_dimensions(1024, 768)
         .with_vsync()
         .build(&events_loop)
