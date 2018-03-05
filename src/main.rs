@@ -10,14 +10,14 @@ fn main() {
         .with_vsync()
         .build(&events_loop)
         .unwrap();
+    let mut running = true;
 
+    gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
     unsafe {
-        window.make_current().unwrap()
-        gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
+        window.make_current().unwrap();
         gl::ClearColor(0.6, 0.6, 0.6, 1.0);
     }
 
-    let mut running = true;
     while running {
         events_loop.poll_events(|event| {
             match event {
