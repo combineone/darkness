@@ -6,7 +6,7 @@ use glutin::GlContext;
 fn main() {
     let mut events_loop = glutin::EventsLoop::new();
     let window = glutin::WindowBuilder::new()
-        .with_title(r#"Darking Engine"#)
+        .with_title(r#"Darkness"#)
         .with_dimensions(1024, 768);
     let context = glutin::ContextBuilder::new()
         .with_vsync(true);
