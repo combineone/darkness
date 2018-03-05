@@ -11,11 +11,9 @@ fn main() {
         .build(&events_loop)
         .unwrap();
 
-    unsafe { window.make_current() }.unwrap();
-
     unsafe {
+        window.make_current().unwrap()
         gl::load_with(|symbol| window.get_proc_address(symbol) as *const _);
-
         gl::ClearColor(0.6, 0.6, 0.6, 1.0);
     }
 
